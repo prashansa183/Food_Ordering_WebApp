@@ -1,52 +1,52 @@
 
-import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom"
-import { Img_CDN_URL } from "./contants";
+import { Img_CDN_URL} from "./contants";
+import useResturant from "./utils/useResturant";
+
 
 const PesturantMenu = () => {
+  // const [res, setres] = useState(null);// i am using the useResturant .
+
+
+  // how to read a dynamic url params
   const Params = useParams();
   const { resID } = Params;
 
-  useEffect(() => {
-    getResturantInfo();  
-  }, []);
+  const res=useResturant(resID)
 
+ 
+  if(res === null) return <shimmer/>;
+
+ 
+
+  // const {name,cusines,costForTwoMessage }=res?.cards[2]?.card?.card?.info;
+
+  // const {itemCards}=res?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card?.card;
+// currently cannot destructure it !
+
+  console.log(res?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card?.card.itemCards)
   
-  const [res, setres] = useState()
-
-  async function getResturantInfo() {
-    const data = await fetch("https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=25.59080&lng=85.13480&restaurantId"+{resID});
-    const json = await data.json();
-    console.log(json.data)
-    setres(json.data)
-  }
-
   return (
-    <>
+    
     <div className="menu">
       <h1>Resturant ID:-{resID}</h1>
-      {/* {console.log( resID)} */}
-       <h2>{res?.data?.card?.name}</h2>
-{/*
-      <img src={ Img_CDN_URL + res.cloudinaryImageId}/>
-      <h3>{res.locality}</h3>
-      <h3>{res.areaName}</h3>
-      <h3>{res.city}</h3>
-      <h3>{res.avgRating}</h3>
-      <h3>{res.costForTwo}</h3> */}
-    </div>
-    <div>
+      <h2>{res?.cards[2]?.card?.card?.info?.name}</h2>
+      <h3>{res?.cards[2]?.card?.card?.info?.costForTwoMessage}</h3> 
+      <h3>{res?.cards[2]?.card?.card?.info?.cusines}</h3>
 
-      {/* <h1>Menu</h1>
+      <h2>menu</h2>
       <ul>
-        {Object.values.apply(res?.menu?.item).map((item)=>(
-        <li key ={item.id}>{item.name}</li>
-        ))}
-      </ul> */}
-    </div>
-    </>  
-  )
-}
+
+        {res?.cards[5]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1].card?.card?.itemCards.map((item)=>
+
+        <li key={item?.card?.info?.id}>{item?.card?.info?.name} -{"Rs."}{item?.card?.info?.price/100 }</li>)}
+      </ul>
+    </div>  
+      )
+      
+    }
+  
+
 
 export default PesturantMenu;
 

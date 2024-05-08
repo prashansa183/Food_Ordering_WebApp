@@ -1,6 +1,14 @@
 export const Img_CDN_URL="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_660/"
 
+export const menuAPI="https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=25.59080&lng=85.13480&restaurantId="
+
 export const Restaurantlist=[
+
+
+
+
+
+
   {
     "info": {
       "id": "246443",
@@ -502,3 +510,5 @@ export const Restaurantlist=[
   }];
 
   
+
+

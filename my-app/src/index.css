@@ -1,4 +1,4 @@
-.header{
+ .header{
   display: flex;
   justify-content: space-between;
   margin:10px;
@@ -11,7 +11,7 @@
 }
 
 .nav-items>ul>li{
-  padding:10px
+  padding:10px;
 }
 .logo{
   width: 120px;
@@ -26,10 +26,10 @@
 .card>img{
   width: 120px;
   margin-left: 5%;
-  /* align-items: center; */
+  align-items: center;
   
 
-}
+ }
 .Resturant-list{
   display: flex;
   flex-wrap: wrap;
@@ -38,5 +38,9 @@
   display: flex;
 }
 body {
-  height: 1000px; /* Adjust the value as needed */
+  height: 1000px;  
+  /* Adjust the value as needed  */
 }
+
+ 
+

@@ -2,12 +2,9 @@ import { Restaurantlist } from "./App";
 import { Restrantcard } from "./ResturantCard";
 import { useState, useEffect } from "react";
 // import shimmer from "./shimmer";
-
-
-function filterData(searchtext, restaurants) {
-  const filterData = restaurants.filter((restaurant) => restaurant?.info?.name?.toLowerCase()?.includes(searchtext.toLowerCase()))
-  return filterData
-}
+import {Link, useOutlet} from "react-router-dom"; 
+import{filterData} from "./utils/helper";
+import useOnline from "./utils/useOnline";
 
 function Body() {
 
@@ -22,6 +19,11 @@ function Body() {
   useEffect(() => {
     getResturant();
   }, []);
+
+  const isOnline=useOnline();
+   if(!isOnline){
+  return <h1>offline, please check your internet connection</h1>
+}
 
   async function getResturant() {
 
@@ -55,9 +57,17 @@ function Body() {
         >search</button>
       </div>
       <div className="Resturant-list">
-        {filterrestaurant.map((restaurant) => {
-          return <Restrantcard {...restaurant.info} key={restaurant.info.id} />;
-        }
+
+        {filterrestaurant.map((restaurant) => (
+          
+          <Link
+          key={restaurant.info.id}
+          to={"/restaurant/"+restaurant.info.id}
+          >
+          
+            <Restrantcard {...restaurant.info} />;
+          </Link>
+        )
         )}
 
 
