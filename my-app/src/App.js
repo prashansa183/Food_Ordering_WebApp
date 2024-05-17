@@ -1,6 +1,6 @@
 import Body from "./body";
 import Footer from "./footer";
-import React,{lazy,Suspense} from "react";
+import React, { lazy, Suspense, useState } from "react";
 import Logo from "./assests/img/94501.jpg"
 import Header from "./header";
 import { Outlet, createBrowserRouter } from "react-router-dom"
@@ -8,10 +8,13 @@ import About from "./About";
 import Profile from "./profile";
 // import shimmer from"./shimmer.js"
 import Contact from "./contact";
-import Error from "./Error";  
+import Error from "./Error";
 import PesturantMenu from "./ResturantMenu";
 import Instamart from "./insta_mart";
-
+import UserContext from "./utils/User_Context";
+import { Provider } from "react-redux";
+import Store from "./utils/store";
+import Cart from "./cart";
 //AS IT IS NOT FUNCTIONING RIGHT NOW.(LAZY LOADING)
 // const Instamart=lazy(()=>{
 //   import("./insta_mart")
@@ -29,13 +32,23 @@ export const Title = () => (
 
     </a>
   </>
- )
+)
 function App() {
+
+  const [user, setuser] = useState({
+    name: "Ankush Raj",
+    email: "supportANkush@gmail.com"
+  })
   return (
     <>
-      <Header />
-      <Outlet />
-      <Footer />
+      <Provider store={Store}>
+      <UserContext.Provider value={{ user: user, setuser: setuser }}>
+        <Header />
+        <Outlet />
+        <Footer />
+      </UserContext.Provider>
+      </Provider>
+      {/* document.getElementById('root') */}
     </>
   )
 }
@@ -48,7 +61,7 @@ const AppRouter = createBrowserRouter([
     children: [
       {
         path: "/About",
-        element: <Suspense fallback ={<h1>Loading...</h1>}> <About /></Suspense>,
+        element: <Suspense fallback={<h1>Loading...</h1>}> <About /></Suspense>,
         children: [{
           path: "profile",
           element: <Profile />
@@ -69,8 +82,13 @@ const AppRouter = createBrowserRouter([
       ,
       {
         path: "/instamart",
-        element:<Suspense> <Instamart /></Suspense>
+        element: <Suspense  fallback={<h1>Loading Instamart...</h1>}> <Instamart /></Suspense>
         //suspense is for lazy loading
+      },
+      {
+        path:"/cart",
+        element:<Cart/>
+
       }
     ],
   },

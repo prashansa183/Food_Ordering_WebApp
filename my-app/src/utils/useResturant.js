@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from "react";
 import { menuAPI } from "../contants";
+
 const useResturant=(resID)=>{
   const [res, setres] = useState(null)
 
@@ -13,6 +14,7 @@ const useResturant=(resID)=>{
 
   async function getResturantInfo() {
     const data = await fetch(menuAPI+resID);
+    console.log(resID)
     const json = await data.json();
     console.log(json)
     setres(json.data)

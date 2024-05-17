@@ -42,5 +42,6 @@ body {
   /* Adjust the value as needed  */
 }
 
- 
-
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
